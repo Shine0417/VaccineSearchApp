@@ -9,12 +9,21 @@ router.get('/', async (req, res) => { // 接收到 GET "/"路徑的request，除
     const newMessage = new TestModel({name: "hello world", score: 99}); //New 一筆資料
     console.log(await newMessage.save()); // 確認沒問題以後存進DB
 });
-  
-router.get('/addTestData', async (req, res) => { // 接收到 GET "/addTestData"路徑的request
-    res.send('請不要一直進來這個網頁');
 
-    const newMessage = new TestModel({name: "=Test Deploy=", score: 1}); // New 一筆資料
-    console.log(await newMessage.save()); // 確認沒問題以後存進DB
+router.get('/loginUser', async (req, res) => { 
+    console.log(req)
 });
   
+router.get('/userData', async (req, res) => {
+    console.log(req)
+});
+  
+
+router.post('/addEntry', async (req, res) => { 
+    console.log(req)
+});
+
+router.get('/loginHospital', async (req, res) => { 
+    console.log(req)
+});
 export default router
