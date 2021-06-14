@@ -1,38 +1,87 @@
 import express from "express";
-import TestModel from "./model/TestModel.js"; // DB schema
+import UserModel from "./model/UserModel.js";
+import HospitalModel from "./model/HospitalModel.js";
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  // 接收到 GET "/"路徑的request，除了GET還有POST、PUT....
   res.send("Hello from Vaccine Searching Machine!!!");
-
-  const newMessage = new TestModel({ name: "hello world", score: 99 }); //New 一筆資料
-  console.log(await newMessage.save()); // 確認沒問題以後存進DB
 });
+
+const validateVaccine = (vaccine) => {
+  if (!Object.values(vaccine).some((x) => x == null || x == ""))
+    return vaccine
+  else
+    return null
+}
 
 router.get("/loginUser", async (req, res) => {
   let { id, name } = req.query;
+  console.log(id, name)
+  const user = await UserModel.findOne({ ID: id, name: name });
+  if (user != null)
+    res.send({ data: "Success" });
+  else
+    res.send({ data: "Failed" });
 
-  res.send({ data: "Success" });
 });
 
 router.get("/userData", async (req, res) => {
+  console.log("GET user Data query ", req.query);
   let { id, name } = req.query;
-  console.log(id, name);
+  const user = await UserModel.findOne({ ID: id, name: name });
   // Query DB
-  // res.send()
+  if (user != null)
+    res.send({ msg: "Success", data: user });
+  else
+    res.send({ msg: "Failed", data: null });
+
 });
 
 router.get("/addEntry", async (req, res) => {
   let entryData = req.query;
-  console.log(entryData)
-  res.send({data: "Success"})
+  const { id, usr_name } = entryData;
+  const vaccineData = {
+    vaccineName: entryData.vaccine_name,
+    date: entryData.date,
+    duration: entryData.duration,
+    count: entryData.count,
+    hospitalName: entryData.hospital_name,
+    doctorName: entryData.doctor_name,
+  }
+  console.log(vaccineData)
+  const user = await UserModel.findOne({ ID: id, name: usr_name });
+  const vaccine = validateVaccine(vaccineData)
+  if (vaccine != null) {
+    if (user != null) {
+      user.Injection.push(vaccine_name);
+      await user.save();
+    }
+    else {
+      const newUser = new UserModel({ name: usr_name, ID: id, Injection: [vaccine] });
+      await newUser.save();
+    }
+    res.send({ data: "Success" })
+  }
+  else
+    res.send({ data: "Failed" })
 });
 
 router.get("/loginHospital", async (req, res) => {
-  let { hospital_name, pwd } = req.query;
-  console.log(hospital_name, pwd);
-  res.send({ data: "Success" });
+  const account = await HospitalModel.findOne({ name: req.query.hospital_name });
+
+  if (account && account.validPassword(req.query.pwd)) {
+    res.send({ data: "Success" });
+    account.save();
+  }
+  else
+    res.send({ data: "Failed" });
 });
+
+const generateHospitalAccount = async (name, password) => {
+  const a = new HospitalModel({ name: name });
+  a.password = a.generateHash(password);
+  return await a.save()
+}
+
 export default router;

@@ -5,6 +5,7 @@
     "license": "MIT",
     "type": "module",
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "express": "^4.17.1",
         "mongoose": "^5.12.13",
         "uuid": "^8.3.2",
