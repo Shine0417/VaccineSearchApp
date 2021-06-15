@@ -11,13 +11,14 @@ router.get("/", async (req, res) => {
 const validateSignature = (publicKey, entryData) => {
   if (publicKey == null)
     return false
-  const signature = entryData.signature;
+  const signature = Buffer.from(entryData.signature, 'base64');
   delete entryData["signature"]
+  const publicPEM = `-----BEGIN PUBLIC KEY-----\n${publicKey}\n-----END PUBLIC KEY-----`;
 
   const verify = crypto.createVerify('SHA256');
   verify.write(JSON.stringify(entryData));
   verify.end();
-  const messageIsValid = verify.verify(publicKey, signature);
+  const messageIsValid = verify.verify(publicPEM, signature);
   // const messageIsValid = verify('sha256', JSON.stringify(entryData), publicKey, signature);
   console.log("Signature verification: ", messageIsValid);
   return messageIsValid
@@ -99,8 +100,8 @@ router.get("/loginHospital", async (req, res) => {
     res.send({ data: "Failed" });
 });
 
-router.post("/setPublicKey", async (res, req) => {
-  let { hospital_name, pwd, public_key } = res.body.data;
+router.post("/setPublicKey", async (req, res) => {
+  let { hospital_name, pwd, public_key } = req.body;
 
   const account = await HospitalModel.findOne({ name: hospital_name });
   if (account && account.validPassword(pwd) && public_key != null) {
@@ -108,7 +109,8 @@ router.post("/setPublicKey", async (res, req) => {
     await account.save()
     res.send("Success")
   }
-  res.send("Failed")
+  else
+    res.send("Failed")
 })
 
 router.get("/addHospital", async (req, res) => {
