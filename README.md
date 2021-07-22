@@ -1,30 +1,5 @@
-# VaccineSearchApp(Backend) README
-* Deploy Method (Be Careful)
-`gcloud app deploy --project causal-flame-316510 app.yaml ./frontend/frontend.yaml ./backend/backend.yaml`
+# 期末專題報告_第四組_疫苗護照 VaccineSearchApp README
 
-* Log
-service 有 frontend, backend
-```
-gcloud app logs tail -s <service>
-gcloud app logs -s <service>
-```
-* 查詢mongo DB 資料
-在gcp
-```
-mongo <IP> //連線
-
-show dbs //顯示db
-
-use test //使用db
-
-db.usermodels.find() //query 空的就代表找全部
-
-db.usermodels.find({name: "Shine"}) //找名字為Shine的usermodel
-```
-
-# VaccineSearch Report
-
-# 期末專題報告_第四組_疫苗護照
 ###### tags: `CNL`
 ## 開發者
 |姓名|學號|貢獻度|負責項目|
@@ -36,19 +11,15 @@ db.usermodels.find({name: "Shine"}) //找名字為Shine的usermodel
 |陳君翰|B07902059|12%|創意發想、資料搜尋、報告撰寫|
 |柯建宇|B06902009|8%|資料搜尋、報告撰寫|
 
+
 ## 發想起點
 疫苗，其向來都是在國際往返間的重要安全保證，已施打疫苗者可以降低本國疾病帶到他國的風險，也可以降低疾病從他國疾病帶回本國的風險，有效阻隔病原體於國際間流動。舉例而言，台灣針對長期居留的外國人會要求施打德國麻疹疫苗，且針對前往不同疫區國家者建議施打不同疫苗，如黃熱病疫苗、傷寒疫苗等，可見疫苗的重要性。
 
 於2020~2021期間，新冠肺炎疫情籠罩全球，造成國際運輸、國際觀光產業大受打擊，隨著疫苗的開發及施打，有些人已經獲得免疫力，既不怕遭受感染也不會傳染新冠肺炎給其他人，這些人已經可以恢復國際觀光與商務旅行，對於國際金融的恢復是極度重要的。因此，許多國家已開始疫苗護照的計畫，頒發疫苗施打證明給已施打者，並檢驗外國旅客的已施打疫苗與否。
 
 我們認為，台灣在這樣的國際情勢下也應儘速發展出能與國際接軌的疫苗護照，一方面保持資料的安全又能兼顧方便及透明度是很重要的，因此有了疫苗護照電子化的發想！不只是在申請簽證上會更加的便利，在未來，國內商家甚至也能夠過疫苗護照的服務檢視其顧客的疫苗施打紀錄，進而訂定不同規定，對於民眾的健康管理也會有很好的效果！
-<p style="page-break-after:always"></p>
 
 ## 使用介紹
-網頁網址：https://frontend-dot-causal-flame-316510.df.r.appspot.com/
-展演影片：
-1. https://youtu.be/jRXiA73ZDCY
-2. https://www.youtube.com/watch?v=pdup_GqjKH4
 
 疫苗護照提供三方服務：
 - 施打者（醫療機構）：登記疫苗施打資料
@@ -56,6 +27,16 @@ db.usermodels.find({name: "Shine"}) //找名字為Shine的usermodel
 - 其他單位：掃描被施打者所產生的QR Code，進而瀏覽被施打者的紀錄
 
 ![](https://i.imgur.com/iK5P1iv.png)
+
+- Deploy網頁網址：
+    - https://frontend-dot-causal-flame-316510.df.r.appspot.com/
+- 展演影片：
+  - [![demo video](https://img.youtube.com/vi/jRXiA73ZDCY/0.jpg)](https://www.youtube.com/watch?v=jRXiA73ZDCY)
+  - [![demo video](https://img.youtube.com/vi/pdup_GqjKH4/0.jpg)](https://www.youtube.com/watch?v=pdup_GqjKH4)
+
+
+
+
 
 <p style="page-break-after:always"></p>
 
@@ -243,6 +224,30 @@ db.usermodels.find({name: "Shine"}) //找名字為Shine的usermodel
 ### 李智源
 //隱藏
 
+
+# VaccineSearchApp(Backend) README
+* Deploy Method (Be Careful)
+`gcloud app deploy --project causal-flame-316510 app.yaml ./frontend/frontend.yaml ./backend/backend.yaml`
+
+* Log
+service 有 frontend, backend
+```
+gcloud app logs tail -s <service>
+gcloud app logs -s <service>
+```
+* 查詢mongo DB 資料
+在gcp
+```
+mongo <IP> //連線
+
+show dbs //顯示db
+
+use test //使用db
+
+db.usermodels.find() //query 空的就代表找全部
+
+db.usermodels.find({name: "Shine"}) //找名字為Shine的usermodel
+```
 ### 周俊廷
 //隱藏
 
